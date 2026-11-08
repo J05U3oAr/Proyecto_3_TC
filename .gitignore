@@ -1,0 +1,22 @@
+# Entornos y archivos locales
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Python y resultados de pruebas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Editores y sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
