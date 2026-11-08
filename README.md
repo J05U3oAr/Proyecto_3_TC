@@ -32,6 +32,17 @@ por operaciones directas de Python.
 
 ## Estado
 
-Preparación inicial del repositorio. Los modelos, el parser y la cinta se
-incorporan en los siguientes commits de la base. El motor, la consola y las dos
-máquinas corresponden a las siguientes etapas del proyecto.
+Estructura y modelos compartidos disponibles. El parser y la cinta se incorporan
+en los siguientes commits de la base. El motor, la consola y las dos máquinas
+corresponden a las siguientes etapas del proyecto.
+
+Los contratos y el detalle del trabajo pendiente están en
+[docs/arquitectura.md](docs/arquitectura.md).
+
+## Pruebas
+
+```powershell
+.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Las pruebas usan `unittest`, incluido en Python; no requieren dependencias extra.
