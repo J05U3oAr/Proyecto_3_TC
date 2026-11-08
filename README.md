@@ -32,12 +32,17 @@ por operaciones directas de Python.
 
 ## Estado
 
-Estructura y modelos compartidos disponibles. El parser y la cinta se incorporan
-en los siguientes commits de la base. El motor, la consola y las dos máquinas
-corresponden a las siguientes etapas del proyecto.
+Estructura, modelos y parser disponibles. La cinta se incorpora en el siguiente
+commit de la base. El motor, la consola y las dos máquinas corresponden a las
+siguientes etapas del proyecto.
 
 Los contratos y el detalle del trabajo pendiente están en
 [docs/arquitectura.md](docs/arquitectura.md).
+
+El [formato YAML](docs/formato_yaml.md) documenta campos, validaciones y la
+decisión sobre las listas ambiguas del ejemplo del enunciado. El archivo
+[examples/base.yaml](examples/base.yaml) es una configuración mínima de prueba,
+no una de las máquinas evaluadas.
 
 ## Pruebas
 

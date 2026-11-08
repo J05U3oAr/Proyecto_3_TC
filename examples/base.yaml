@@ -1,0 +1,24 @@
+# Ejemplo mínimo de infraestructura; no es una máquina evaluada del proyecto.
+# Recorre símbolos 'a' y llega a qf cuando encuentra el blanco.
+mt:
+  states: [q0, qf]
+  input_alphabet: ["a"]
+  tape_alphabet: ["a", "B"]
+  initial_state: q0
+  accept_states: [qf]
+  blank: "B"
+  transitions:
+    - state: q0
+      read: "a"
+      write: "a"
+      move: R
+      next: q0
+    - state: q0
+      read: "B"
+      write: "B"
+      move: S
+      next: qf
+inputs:
+  - ""
+  - "a"
+  - "aaa"
