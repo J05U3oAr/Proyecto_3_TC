@@ -1,0 +1,30 @@
+# Reconoce a^n b^n c^n, con n >= 1, marcando en orden una terna por pasada.
+mt:
+  states: [q0, find_b, find_c, return_left, check_tail, accept]
+  input_alphabet: ["a", "b", "c"]
+  tape_alphabet: ["a", "b", "c", "X", "Y", "Z", "B"]
+  initial_state: q0
+  accept_states: [accept]
+  blank: "B"
+  transitions:
+    - {state: q0, read: "X", write: "X", move: R, next: q0}
+    - {state: q0, read: "a", write: "X", move: R, next: find_b}
+    - {state: q0, read: "Y", write: "Y", move: R, next: check_tail}
+    - {state: q0, read: "Z", write: "Z", move: R, next: check_tail}
+    - {state: find_b, read: "a", write: "a", move: R, next: find_b}
+    - {state: find_b, read: "Y", write: "Y", move: R, next: find_b}
+    - {state: find_b, read: "b", write: "Y", move: R, next: find_c}
+    - {state: find_c, read: "b", write: "b", move: R, next: find_c}
+    - {state: find_c, read: "Z", write: "Z", move: R, next: find_c}
+    - {state: find_c, read: "c", write: "Z", move: L, next: return_left}
+    - {state: return_left, read: "a", write: "a", move: L, next: return_left}
+    - {state: return_left, read: "b", write: "b", move: L, next: return_left}
+    - {state: return_left, read: "c", write: "c", move: L, next: return_left}
+    - {state: return_left, read: "X", write: "X", move: L, next: return_left}
+    - {state: return_left, read: "Y", write: "Y", move: L, next: return_left}
+    - {state: return_left, read: "Z", write: "Z", move: L, next: return_left}
+    - {state: return_left, read: "B", write: "B", move: R, next: q0}
+    - {state: check_tail, read: "Y", write: "Y", move: R, next: check_tail}
+    - {state: check_tail, read: "Z", write: "Z", move: R, next: check_tail}
+    - {state: check_tail, read: "B", write: "B", move: S, next: accept}
+inputs: ["aabbcc", "aaabbbccc", "aabbccc", "aabcbc"]
