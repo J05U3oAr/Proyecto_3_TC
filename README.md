@@ -42,6 +42,11 @@ y video. La base aún no ejecuta simulaciones completas ni tiene interfaz de con
 Los contratos y el detalle del trabajo pendiente están en
 [docs/arquitectura.md](docs/arquitectura.md).
 
+Para continuar con otra IA, adjuntar
+[INSTRUCCIONES_IA.md](INSTRUCCIONES_IA.md) e indicar si el rol es Alejandro o
+Sebas. El documento contiene el orden de trabajo, los límites de cada rol y
+mensajes listos para iniciar la conversación.
+
 El [formato YAML](docs/formato_yaml.md) documenta campos, validaciones y la
 decisión sobre las listas ambiguas del ejemplo del enunciado. El archivo
 [examples/base.yaml](examples/base.yaml) es una configuración mínima de prueba,
