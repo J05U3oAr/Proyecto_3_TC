@@ -2,21 +2,22 @@
 
 ## Responsabilidades
 
-La base contiene datos y operaciones de cinta, sin ejecutar la máquina.
+La base contiene datos y operaciones de cinta; el motor y la consola ya están
+implementados sobre esos contratos.
 
 | Archivo | Responsable | Función |
 | --- | --- | --- |
 | `src/models.py` | J05U3oAr | Contratos compartidos. |
 | `src/yaml_loader.py` | J05U3oAr | Carga y validación del YAML. |
 | `src/tape.py` | J05U3oAr | Cinta dispersa y cabezal. |
-| `src/simulator.py` (pendiente) | Alejandro | Ejecución de transiciones e historial. |
-| `examples/reconocedora.yaml` (pendiente) | Alejandro | Reconocer `a^n b^n c^n`, con `n >= 1`. |
-| `src/formatter.py` (pendiente) | Sebas | Presentación de las descripciones instantáneas. |
-| `src/main.py` (pendiente) | Sebas | Interfaz de consola. |
-| `examples/multiplicadora.yaml` (pendiente) | Sebas | Multiplicación de operandos binarios. |
+| `src/simulator.py` | Alejandro | Ejecución de transiciones e historial. |
+| `examples/reconocedora.yaml` | Alejandro | Reconocer `a^n b^n c^n`, con `n >= 1`. |
+| `src/formatter.py` | Sebas | Presentación de las descripciones instantáneas. |
+| `src/main.py` | Sebas | Interfaz de consola. |
+| `examples/multiplicadora.yaml` | Sebas | Multiplicación de operandos binarios. |
 
-Los archivos pendientes se enumeran como guía: no se crean implementaciones ni
-archivos vacíos que ocupen el trabajo de los siguientes responsables.
+Ambas máquinas se ejecutan con el mismo motor. La consola llama a `simulate`
+por cada entrada y el formateador presenta todos los snapshots del resultado.
 
 ## Modelos
 
@@ -28,7 +29,7 @@ archivos vacíos que ocupen el trabajo de los siguientes responsables.
 - `TapeSnapshot(cells, head, blank)`: copia inmutable de la cinta; `cells` es una
   tupla de pares `(posición, símbolo)` ordenada, que omite las celdas blancas.
 - `InstantaneousDescription(step, state, tape)`: un paso, su estado y snapshot.
-- `SimulationResult(input_string, status, history)`: salida del futuro motor.
+- `SimulationResult(input_string, status, history)`: salida del motor.
   `final_configuration` devuelve la última ID. El historial no puede estar vacío.
 
 Los modelos usan `dataclass(frozen=True)`, colecciones inmutables y una copia
@@ -51,9 +52,9 @@ transition = machine.transitions.get((machine.initial_state, symbol))
 initial_snapshot = tape.snapshot()
 ```
 
-La base termina en la búsqueda de una regla. Alejandro implementará su ejecución
-en el motor. `ConfigurationError` informa errores de archivo, sintaxis o
-configuración con un mensaje dirigido a la persona que edita el YAML.
+El motor de Alejandro ejecuta la regla encontrada. `ConfigurationError` informa
+errores de archivo, sintaxis o configuración con un mensaje dirigido a la persona
+que edita el YAML.
 
 `Tape` expone:
 
@@ -67,11 +68,11 @@ configuración con un mensaje dirigido a la persona que edita el YAML.
 | `snapshot()` | Captura independiente que no cambia cuando se modifica la cinta. |
 
 La cinta no conoce estados, alfabetos ni aceptación. El parser valida los símbolos
-configurados; el motor ejecutará las reglas previamente validadas.
+configurados; el motor ejecuta las reglas previamente validadas.
 
-## Contrato que debe implementar Alejandro
+## Contrato implementado por el motor
 
-API propuesta para que Sebas pueda preparar la consola:
+API utilizada por la consola:
 
 ```python
 simulate(
@@ -82,8 +83,7 @@ simulate(
 ) -> SimulationResult
 ```
 
-Esta función está **pendiente**, no se exporta desde la base. Su comportamiento
-acordado es:
+Esta función se importa de `src.simulator`. Su comportamiento es:
 
 1. Crear una cinta nueva por entrada y comenzar en `initial_state`, paso 0.
 2. Guardar la ID inicial antes de aplicar transiciones.
@@ -94,11 +94,15 @@ acordado es:
    todavía se requiere otra transición. No presentar ese resultado como rechazo.
 
 El historial completo usa snapshots, nunca referencias a una misma cinta mutable.
-Sebas debe mostrar también la posición del cabezal cuando esté sobre un blanco y
-los índices negativos. Para mostrar un intervalo, deberá incluir al menos el
-cabezal y las celdas no blancas; una cinta vacía sigue mostrando una celda blanca.
+El formateador muestra la posición del cabezal también sobre blancos e índices
+negativos. El intervalo incluye el cabezal y todas las celdas no blancas; una
+cinta vacía sigue mostrando al menos una celda blanca.
 
-## Trabajo individual pendiente
+## Responsabilidades y seguimiento
+
+El motor, ambas máquinas, la consola y sus pruebas están implementados. Las listas
+siguientes conservan el alcance de cada responsable; la integración final del
+equipo y el video se siguen en el README y `docs/entrega.md`.
 
 ### Alejandro
 
